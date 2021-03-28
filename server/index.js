@@ -20,6 +20,6 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 //123123123123123123
-const port = process.env.PROT;
+const port = process.env.PROT || 3000;
 app.listen(port, () => console.log('Server strated on port'+port));
 
