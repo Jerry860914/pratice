@@ -43,7 +43,7 @@ export default {
         error:'',
         text:'外資買超',
         date:'',
-        url:'http://54.238.185.168:8080/api/posts/F_BUY',
+        url:'http://220.132.197.143:8080/api/posts/F_BUY',
         //url:'http://localhost:5000/api/posts/F_BUY',
         isShow:false,
         isload:true,

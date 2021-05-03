@@ -7,7 +7,6 @@ class PostService {
     static getPosts(url) {
         return  new Promise( (resolve, reject) =>{
             try{
-                
                 const res =  axios.get(url);
                 //const data = res.data;
 
