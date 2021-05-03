@@ -1,18 +1,18 @@
 <template>
   <div class="news">
     <h1>行情隨風飄 錢在燒股再飆</h1>
-    <input type="text" v-model="message" class = "input" placeholder="輸入代碼">
-    <button v-on:click="123">搜尋</button>
+    <input type="text" v-model="params.data_id" class = "input" placeholder="輸入代碼" @keyup.enter="getnews()">
+    <button v-on:click="getnews()">搜尋</button>
     
-    <div><h2>{{message}}  相關新聞</h2></div>
+    <div><h2>{{params.data_id}}  相關新聞</h2></div>
     <section class="news_list">
       <div class="news_item" v-for ="(item , itemid) in arr" :key ="itemid">
         
        
-        <a href="" class="news_link">
+        <a :href="item.link" class="news_link"  target="_blank">
           <div class="time">{{item.date}} </div>
           <div class="title"><h3>{{item.title}}</h3></div> 
-          <div class="source"><h3>{{item.source}}</h3></div> 
+          <div class="source"><h4>來源:{{item.source}}</h4></div> 
         </a>
       
       </div>
@@ -25,20 +25,37 @@
 
 
 <script>
+import PostService from '../PostService'
 export default {
   data (){
     return {
       message : "",
-      arr : [{title:"this is  a pen" , date:"2020", source:"123"},
-             {title:"this is  b pen" , date:"2020", source:"123"},
-             {title:"this is  c pen" , date:"2020", source:"123"},
-             {title:"this is  d pen" , date:"2020", source:"123"},
-             
-             ]
+      arr : [],
+      url : "https://api.finmindtrade.com/api/v4/data",
+      params:{dataset: "TaiwanStockNews",
+              data_id:"",
+              start_date: "2021-01-01",
+              end_date: "2021-04-03",
+              token: "", }
     }
+    
 
+  },
+  methods:{
+      getnews (){
+        PostService.getNews(this.url,this.params).then( (e)=> {
+          console.log(e.data);
+          this.arr = e.data['data'].reverse();
+          console.log(this.arr);
+          if(this.arr == 0){
+            this.arr = [{title:"無相關新聞",source:"無"}];
+          }
+        }).catch((e) =>{
+          console.log(e);
+        });  
+      }
   }
-
+  
 }
 </script>
 
@@ -64,7 +81,7 @@ export default {
 }
 
 .news_item:hover{
-  background-color: #f57c7c;
+  background-color: #98f57c;
 }
 .news_link>.time{
   
@@ -78,5 +95,7 @@ button{
   width: 50px;
 }
 
-
+a {
+    text-decoration:none;
+}
 </style>

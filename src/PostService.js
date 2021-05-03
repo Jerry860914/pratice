@@ -19,10 +19,21 @@ class PostService {
             }
         });
     }
+    static getNews(url,params) {
+        return  new Promise( (resolve, reject) =>{
+            try{
+                
+                const res =  axios.get(url,{params});
+                //const data = res.data;
 
-
-    //Delete post
-
+                resolve(
+                    res
+                );
+            }catch(err){
+                reject(err);
+            }
+        });
+    }
 
  
     
