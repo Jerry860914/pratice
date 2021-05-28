@@ -35,7 +35,7 @@ export default {
       params:{dataset: "TaiwanStockNews",
               data_id:"",
               start_date: "2021-01-01",
-              end_date: "2021-05-03",
+              end_date: "2021-05-21",
               token: "", }
     }
     

@@ -34,6 +34,22 @@ class PostService {
         });
     }
 
+    static getHome(url,params) {
+        return  new Promise( (resolve, reject) =>{
+            try{
+                
+                const res =  axios.get(url,{params});
+                //const data = res.data;
+
+                resolve(
+                    res
+                );
+            }catch(err){
+                reject(err);
+            }
+        });
+    }
+
  
     
 }

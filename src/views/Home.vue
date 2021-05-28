@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import PostService from '../PostService'
 export default {
   
   data() {
@@ -17,6 +18,12 @@ export default {
       date:1, 
       time:'',
       timer:null,
+      url : "https://api.finmindtrade.com/api/v4/data",
+      params:{dataset: "TaiwanVariousIndicators5Seconds",
+              data_id:"",
+              start_date: "2021-05-24",
+              end_date: "2021-05-24",
+              token: "", }
     }
   },
   methods :{
@@ -26,13 +33,15 @@ export default {
     var mm = today.getMinutes();
     var ss = today.getSeconds();
     
+
+
     this.time = this.check(hh)+":"+ this.check(mm) +":"+ this.check(ss);
     
     },
     check(i) {
       if(i < 10){
         var v = "0" + i;
-        console.log(v);
+        
         return  v;
       }else{
         return i;
@@ -41,8 +50,18 @@ export default {
     
   },
   created() {
-    this.updatetime()
-   
+    this.updatetime();
+
+    PostService.getHome(this.url, this.params).then( (e)=> {
+          console.log(e.data);
+          this.point = e.data['data'][e.data['data'].length-1]["TAIEX"];
+          console.log(this.point);
+          
+        }).catch((e) =>{
+          console.log(e);
+        }); 
+
+
   },
   mounted(){
     this.timer = setInterval(() => {
